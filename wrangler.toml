@@ -24,7 +24,7 @@ crons = ["*/5 * * * *"]
 # ============================================================
 [[kv_namespaces]]
 binding = "STATUS_KV"
-id = "<YOUR_KV_NAMESPACE_ID>"
+id = "<YOUR_KV_NAMESPACE_ID>"  # npx wrangler kv:namespace create STATUS_KV で取得した ID に置き換えてください
 
 # ============================================================
 # シークレット設定（以下のコマンドで設定）

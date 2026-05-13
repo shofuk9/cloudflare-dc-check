@@ -1,0 +1,13 @@
+{
+  "name": "cf-status-monitor",
+  "version": "1.0.0",
+  "description": "Cloudflare データセンター ステータス監視 & Slack通知システム",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "wrangler dev --test-scheduled",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

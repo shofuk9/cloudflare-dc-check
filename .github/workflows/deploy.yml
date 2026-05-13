@@ -14,6 +14,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Inject Configuration
+        env:
+          MONITORED_DCS: ${{ vars.MONITORED_DCS || 'NRT,KIX' }}
+          KV_NAMESPACE_ID: ${{ secrets.KV_NAMESPACE_ID }}
+        run: |
+          sed -i "s/\${MONITORED_DCS}/$MONITORED_DCS/g" wrangler.toml
+          sed -i "s/\${KV_NAMESPACE_ID}/$KV_NAMESPACE_ID/g" wrangler.toml
+
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
         with:

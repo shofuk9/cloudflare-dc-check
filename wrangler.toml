@@ -9,7 +9,7 @@ compatibility_date = "2024-01-01"
 # 全データセンターを監視する場合は "ALL" を指定
 # ============================================================
 [vars]
-MONITORED_DCS = "NRT,KIX,HYD"
+MONITORED_DCS = "${MONITORED_DCS}"
 
 # ============================================================
 # Cron Trigger 設定（5分ごとに実行）
@@ -19,12 +19,10 @@ crons = ["*/5 * * * *"]
 
 # ============================================================
 # KV ネームスペース設定
-# 以下のコマンドで作成後、id を設定してください:
-#   npx wrangler kv:namespace create STATUS_KV
 # ============================================================
 [[kv_namespaces]]
 binding = "STATUS_KV"
-id = "<YOUR_KV_NAMESPACE_ID>"  # npx wrangler kv:namespace create STATUS_KV で取得した ID に置き換えてください
+id = "${KV_NAMESPACE_ID}"
 
 # ============================================================
 # シークレット設定（以下のコマンドで設定）

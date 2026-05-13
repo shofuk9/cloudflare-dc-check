@@ -86,19 +86,21 @@ npx wrangler kv:namespace create STATUS_KV
 
 出力された（または画面に表示された）**Namespace ID** をコピーしてください。
 
-### 4. wrangler.toml の編集
+### 4. wrangler.toml の編集（ローカルデプロイの場合のみ）
 
-`wrangler.toml` を開き、以下を自分の環境に合わせて編集します：
+> ⚠️ **GitHub Actions で自動デプロイする場合、この手順は不要です。** 次の「デプロイ方法」に進んでください。
+
+ローカル環境から手動でデプロイする場合は、`wrangler.toml` を開き、プレースホルダーを自分の環境に合わせて直接編集してください：
 
 ```toml
 # 監視対象データセンター（カンマ区切りのIATAコード）
 [vars]
-MONITORED_DCS = "NRT,KIX"
+MONITORED_DCS = "NRT,KIX"  # ${MONITORED_DCS} から書き換え
 
 # KV ネームスペース ID を設定
 [[kv_namespaces]]
 binding = "STATUS_KV"
-id = "<ステップ3で取得したID>"
+id = "<ステップ3で取得したID>"  # ${KV_NAMESPACE_ID} から書き換え
 ```
 
 #### 主な日本のデータセンター
@@ -119,15 +121,26 @@ id = "<ステップ3で取得したID>"
 
 ローカルに `wrangler` をインストールせず、GitHub だけで完結する方法です。
 
-#### GitHub Secrets の設定
+#### GitHub Secrets と Variables の設定
 
-リポジトリの **Settings** → **Secrets and variables** → **Actions** で以下の 3 つを登録します：
+リポジトリの **Settings** → **Secrets and variables** → **Actions** で以下の設定を行います：
+
+**1. Secrets (シークレット)** 
+以下の 3 つを登録します：
 
 | Secret 名 | 値 | 説明 |
 |-----------|---|------|
 | `CLOUDFLARE_API_TOKEN` | `xxxxxxxx` | ステップ1で取得した API トークン |
 | `CLOUDFLARE_ACCOUNT_ID` | `xxxxxxxx` | Cloudflare ダッシュボードに表示されるアカウント ID |
 | `SLACK_WEBHOOK_URL` | `https://hooks.slack.com/services/...` | ステップ2で取得した Webhook URL |
+| `KV_NAMESPACE_ID` | `xxxxxxxxxxxxxxxx` | ステップ3で取得した KV の ID |
+
+**2. Variables (変数) - 任意**
+必要に応じて **Variables** タブに以下を登録します（登録しない場合はデフォルトで `NRT,KIX` が設定されます）：
+
+| Variable 名 | 値の例 | 説明 |
+|-------------|-------|------|
+| `MONITORED_DCS` | `NRT,KIX,FUK` | 監視対象のIATAコード（カンマ区切り）。全監視は `ALL` |
 
 #### デプロイ実行
 

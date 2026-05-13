@@ -132,6 +132,7 @@ id = "<ステップ3で取得したID>"  # ${KV_NAMESPACE_ID} から書き換え
 |-----------|---|------|
 | `CLOUDFLARE_API_TOKEN` | `xxxxxxxx` | ステップ1で取得した API トークン |
 | `CLOUDFLARE_ACCOUNT_ID` | `xxxxxxxx` | Cloudflare ダッシュボードに表示されるアカウント ID |
+| `SLACK_WEBHOOK_URL` | `https://hooks.slack.com/services/...` | ステップ2で取得した Webhook URL |
 | `KV_NAMESPACE_ID` | `xxxxxxxxxxxxxxxx` | ステップ3で取得した KV の ID |
 
 **2. Variables (変数) - 任意**
@@ -140,14 +141,6 @@ id = "<ステップ3で取得したID>"  # ${KV_NAMESPACE_ID} から書き換え
 | Variable 名 | 値の例 | 説明 |
 |-------------|-------|------|
 | `MONITORED_DCS` | `NRT,KIX,FUK` | 監視対象のIATAコード（カンマ区切り）。全監視は `ALL` |
-
-#### デプロイ前のシークレット設定（初回のみ）
-
-デプロイする前に、ローカルから以下のコマンドを実行して Slack の Webhook URL を Cloudflare 側に直接保存します（セキュリティのため GitHub Actions からの自動転送は行いません）。
-
-```bash
-npx wrangler secret put SLACK_WEBHOOK_URL
-```
 
 #### デプロイ実行
 
